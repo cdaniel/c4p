@@ -2,7 +2,7 @@
 //  OpenShift sample Node application
 var express = require('express');
 var fs      = require('fs');
-
+var stormpath = require('express-stormpath');
 
 /**
  *  Define the sample application.
@@ -114,10 +114,22 @@ var SampleApp = function() {
     self.initializeServer = function() {
         self.createRoutes();
         self.app = express.createServer();
+        
+        var stormpathMiddleware = stormpath.init(self.app, {
+            apiKeyFile: 'apiKey.properties',
+            application: 'https://api.stormpath.com/v1/applications/5ORBBDcTQ6gShXRiLeI1Lf',
+            secretKey: 'some_long_random_string',
+            expandCustomData: true,
+            enableForgotPassword: true
+        });
+        
+        self.app.use(stormpathMiddleware);
+        self.app.set('views', './views');
+        self.app.set('view engine', 'jade');
 
         //  Add handlers for the app (from the routes).
         for (var r in self.routes) {
-            self.app.get(r, self.routes[r]);
+            self.app.get(r, stormpath.loginRequired, self.routes[r]);
         }
     };
 
