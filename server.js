@@ -3,6 +3,8 @@
 var express = require('express');
 var fs      = require('fs');
 var stormpath = require('express-stormpath');
+var cookieParser = require('cookie-parser')
+var csurf = require('csurf');
 
 /**
  *  Define the sample application.
@@ -113,7 +115,7 @@ var SampleApp = function() {
      */
     self.initializeServer = function() {
         self.createRoutes();
-        self.app = express.createServer();
+        self.app = express();
         
         var stormpathMiddleware = stormpath.init(self.app, {
             apiKeyFile: 'apiKey.properties',
@@ -126,6 +128,11 @@ var SampleApp = function() {
         self.app.use(stormpathMiddleware);
         self.app.set('views', './views');
         self.app.set('view engine', 'jade');
+        
+        self.app.use(cookieParser());
+        self.app.use(csurf({ cookie: true }));
+        
+        self.app.use('/profile', require('./profile')());
 
         //  Add handlers for the app (from the routes).
         for (var r in self.routes) {
