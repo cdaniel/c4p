@@ -1,0 +1,38 @@
+html
+  head
+    title Speaker's Home
+    link(
+      href='//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css',
+      rel='stylesheet'
+    )
+    script(src='//cdnjs.cloudflare.com/ajax/libs/jquery/1.11.2/jquery.min.js')
+    script(src='//netdna.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js')
+  body
+    div.container
+
+      div.page-header
+        h1 Speaker's home
+
+      .center-block.col-xs-16.col-sm-12.col-md-8.col-lg-4(style="margin-left: auto;margin-right: auto;float: none !important")
+        if user.customData.biofilled
+            p You have filled your profile. Remember to keep it up to date!
+            a.btn.btn-info(href="/profile") Update your profile!
+        else
+            p Your profile is very important!
+            a.btn.btn-success(href="/profile") Fill your profile!
+        hr
+        
+        p Your proposals (click to edit):
+        if user.customData.proposals.length == 0
+            p You have not proposed any talk.
+        else
+            .listgroup
+                - for (var i = 0; i < user.customData.proposals.length; i++) {
+                    a.list-group-item(href="proposal/#{i}")
+                        h4.list-group-item-heading= user.customData.proposals[i].title
+                        p.list-group-item-text= user.customData.proposals[i]['abstract']
+                - }
+                a.list-group-item.list-group-item-info(href="/proposal/n") Click to add a new proposal!
+        hr
+        div.pull-right
+          a(href="/logout") Logout

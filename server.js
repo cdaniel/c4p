@@ -1,7 +1,6 @@
 #!/bin/env node
 //  OpenShift sample Node application
 var express = require('express');
-var fs      = require('fs');
 var stormpath = require('express-stormpath');
 var cookieParser = require('cookie-parser')
 var csurf = require('csurf');
@@ -34,26 +33,6 @@ var SampleApp = function() {
             self.ipaddress = "127.0.0.1";
         };
     };
-
-
-    /**
-     *  Populate the cache.
-     */
-    self.populateCache = function() {
-        if (typeof self.zcache === "undefined") {
-            self.zcache = { 'index.html': '' };
-        }
-
-        //  Local cache for static content.
-        self.zcache['index.html'] = fs.readFileSync('./index.html');
-    };
-
-
-    /**
-     *  Retrieve entry (content) from cache.
-     *  @param {string} key  Key identifying content to retrieve from cache.
-     */
-    self.cache_get = function(key) { return self.zcache[key]; };
 
 
     /**
@@ -97,14 +76,8 @@ var SampleApp = function() {
     self.createRoutes = function() {
         self.routes = { };
 
-        self.routes['/asciimo'] = function(req, res) {
-            var link = "http://i.imgur.com/kmbjB.png";
-            res.send("<html><body><img src='" + link + "'></body></html>");
-        };
-
         self.routes['/'] = function(req, res) {
-            res.setHeader('Content-Type', 'text/html');
-            res.send(self.cache_get('index.html') );
+            res.render('home', {user:req.user});
         };
     };
 
@@ -134,6 +107,7 @@ var SampleApp = function() {
         
         self.app.use('/profile', stormpath.loginRequired, require('./profile')());
         self.app.use('/proposal', stormpath.loginRequired , require('./proposal')());
+        self.app.use('/proposal', stormpath.loginRequired , require('./proposal')());
 
         //  Add handlers for the app (from the routes).
         for (var r in self.routes) {
@@ -147,7 +121,6 @@ var SampleApp = function() {
      */
     self.initialize = function() {
         self.setupVariables();
-        self.populateCache();
         self.setupTerminationHandlers();
 
         // Create the express server and routes.
