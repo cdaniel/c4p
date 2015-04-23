@@ -65,7 +65,7 @@ module.exports = function profile(){
         req.user.surname = form.data.surname;
         req.user.customData.bio = form.data.bio;
         req.user.customData.biofilled = true;
-        req.user.save(function(err){
+        req.user.customData.save(function(err){
           if(err){
             if(err.developerMessage){
               console.error(err);

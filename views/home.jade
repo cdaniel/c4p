@@ -36,16 +36,14 @@ html
         hr
         
         p Your proposals (click to edit):
-        if user.customData.proposals.length == 0
-            p You have not proposed any talk.
-        else
-            .listgroup
+        .listgroup
+            if user.customData.proposals
                 - for (var i = 0; i < user.customData.proposals.length; i++) {
                     a.list-group-item(href="proposal/#{i}")
                         h4.list-group-item-heading= user.customData.proposals[i].title
                         p.list-group-item-text= user.customData.proposals[i]['abstract']
                 - }
-                a.list-group-item.list-group-item-info(href="/proposal/n") Click to add a new proposal!
+            a.list-group-item.list-group-item-info(href="/proposal/n") Click to add a new proposal!
         hr
         div.pull-right
           a(href="/logout") Logout

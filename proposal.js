@@ -83,7 +83,7 @@ module.exports = function profile() {
                     req.user.customData.proposals[req.params.proposalid] = proposal;
                     redirectTarget = redirectTarget + req.params.proposalid;
                 }
-                req.user.save(function(err) {
+                req.user.customData.save(function(err) {
                     if (err) {
                         if (err.developerMessage) {
                             console.error(err);
