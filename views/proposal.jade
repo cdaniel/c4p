@@ -1,0 +1,47 @@
+html
+  head
+    link(
+      href='//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css',
+      rel='stylesheet'
+    )
+  body
+    div.container
+
+      div.page-header
+        h1 Presentation proposal
+
+      if errors
+        each error in errors
+          div.alert.alert-danger
+            span #{error.error}
+      if saved
+        div.alert.alert-success
+          span Your proposal has been saved
+      form.login-form.form-horizontal(method='post', role='form')
+        input(name='_csrf', type='hidden', value=csrfToken)
+
+
+        div.form-group
+          label.col-sm-4 Long Abstract
+          div.col-sm-8
+            textarea.form-control(placeholder='At least 1000 characters',
+              required=true,
+              name='abstract',
+              type='text',
+              rows="6"
+              value)= abstract 
+        div.form-group
+          label.col-sm-4 Title
+          div.col-sm-8
+            input.form-control(
+              placeholder='title',
+              required=true,
+              name='title',
+              type='text',
+              value=title)
+              
+        div.form-group
+          div.col-sm-offset-4.col-sm-8
+            button.login.btn.btn-primary(type='submit') Save
+        div.pull-right
+          a(href="/") Return to home page

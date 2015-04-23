@@ -132,7 +132,8 @@ var SampleApp = function() {
         self.app.use(cookieParser());
         self.app.use(csurf({ cookie: true }));
         
-        self.app.use('/profile', require('./profile')());
+        self.app.use('/profile', stormpath.loginRequired, require('./profile')());
+        self.app.use('/proposal', stormpath.loginRequired , require('./proposal')());
 
         //  Add handlers for the app (from the routes).
         for (var r in self.routes) {
