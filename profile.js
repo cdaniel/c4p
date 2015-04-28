@@ -17,6 +17,7 @@ var csurf = require('csurf');
 var collectFormErrors = require('express-stormpath/lib/helpers').collectFormErrors;
 var stormpath = require('express-stormpath');
 var extend = require('xtend');
+var gravatar = require('gravatar');
 
 // Declare the schema of our form:
 
@@ -38,7 +39,8 @@ function renderForm(req,res,locals){
     csrfToken: req.csrfToken(),
     givenName: req.user.givenName,
     surname: req.user.surname,
-    bio: req.user.customData.bio
+    bio: req.user.customData.bio,
+    imgsrc : gravatar.url(req.user.email, {s: '200', r: 'pg', d:'mm'}, true)
   },locals||{}));
 }
 

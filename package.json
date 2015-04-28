@@ -31,7 +31,8 @@
     "forms" : "*",
     "xtend" : "*",
     "csurf" : "*",
-    "cookie-parser" : "*"
+    "cookie-parser" : "*",
+    "gravatar" : "*"
   },
   "devDependencies": {},
   "bundleDependencies": [],
