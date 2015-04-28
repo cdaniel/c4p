@@ -13,6 +13,9 @@ I do not consider myself a developer anymore, and development techniques have ch
 ### Component 2 - User Management
 User registration, e-mail confirmation, password management - those are all boring tasks that are hard to get right for first timers. But, hey, Maps say that those tasks should be outsourced, and there is one provider that offers a free tier - [Stormpath](stormpath.com). If you want to run this application, you need to register there and obtain apiKey.properties file. 
 
+### Component 3 - User Image
+Why to reinvent the wheel again? Image upload? Cropping? That's like plenty of code to write. Let's use a service that already does this and does it well - [Gravatar](https://en.gravatar.com). The commit adding this feature had 10 (ten) lines.
+
 ## Open Source
 Maps say that open source increases adoption. This software is expected to ease the paper submission process for all sides, so, take it, use it, share it, do whatever you want. It is all ASL 2.0.
 
