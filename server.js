@@ -107,7 +107,8 @@ var SampleApp = function() {
             application: 'https://api.stormpath.com/v1/applications/5ORBBDcTQ6gShXRiLeI1Lf',
             secretKey: 'some_long_random_string',
             expandCustomData: true,
-            enableForgotPassword: true
+            enableForgotPassword: true,
+            enableAccountVerification: true
         });
         
         self.app.use(stormpathMiddleware);
