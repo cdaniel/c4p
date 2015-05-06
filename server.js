@@ -120,7 +120,12 @@ var SampleApp = function() {
         
         self.app.use('/profile', stormpath.loginRequired, require('./profile')());
         self.app.use('/proposal', stormpath.loginRequired , require('./proposal')());
-        self.app.use('/proposal', stormpath.loginRequired , require('./proposal')());
+        
+        var stormpath_ll = require('stormpath');
+        stormpath_ll.loadApiKey('apiKey.properties', function(err, apiKey) {
+            client = new stormpath_ll.Client({apiKey: apiKey});
+            self.app.use('/export', stormpath.groupsRequired(['admins']) , require('./_export')(client));
+        });
 
         //  Add handlers for the app (from the routes).
         for (var r in self.routes) {

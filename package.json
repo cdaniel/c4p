@@ -27,6 +27,8 @@
   "dependencies": {
     "express": "*",
     "express-stormpath" : "*",
+    "stormpath" : "*",
+    "json2xls" : "*",
     "jade" : "*",
     "forms" : "*",
     "xtend" : "*",
